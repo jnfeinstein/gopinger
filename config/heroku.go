@@ -9,10 +9,14 @@ import (
 	"os"
 )
 
-const APPNAME = "GOBOILERPLATE"
+const APPNAME = "GOPINGER"
 
 func IsHeroku() bool {
 	return true
+}
+
+func Url() string {
+	return os.Getenv("URL")
 }
 
 func Initialize(m *martini.ClassicMartini) {

@@ -1,1 +1,1 @@
-web: goboilerplate
+web: gopinger
