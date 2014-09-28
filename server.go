@@ -6,6 +6,7 @@ import (
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"gopinger/config"
+	"net/http"
 	"time"
 )
 
@@ -86,8 +87,8 @@ func main() {
 
 	sites := make(SiteMap)
 
-	m.Get("/", func(r render.Render) {
-		r.HTML(200, "index", config.Url())
+	m.Get("/", func(r render.Render, req *http.Request) {
+		r.HTML(200, "index", req.Host)
 	})
 
 	m.Get("/add/:ip", func(p martini.Params) string {
