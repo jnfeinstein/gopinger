@@ -1,0 +1,12 @@
+<div>This app will curl specified sites at a rate of once per minute.</div>
+<div>All curls are public; expect no privacy!</div>
+<br/>
+<div>USAGE:</div>
+<div>
+  <table>
+    <tr><td><strong>{{.}}/add/</strong>[domain_or_ip]</td><td>- Begin curling a site</td><td>/ Returns "OK" on success</td></tr>
+    <tr><td><strong>{{.}}/remove/</strong>[domain_or_ip]</td><td>- Stop curling a site</td><td>/ Returns "OK" on success</td></tr>
+    <tr><td><strong>{{.}}/query/</strong>[domain_or_ip]</td><td>- Get stats for a site</td><td>/ Returns "Site not found" on failure</td></tr>
+    <tr><td><strong>{{.}}/dump</strong></td><td>- Get stats for all sites</td><td>/ Always succeeds</td></tr>
+  </table>
+</div>

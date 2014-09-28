@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-av/curl"
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/render"
 	"gopinger/config"
 	"time"
 )
@@ -81,10 +82,12 @@ func main() {
 
 	config.Initialize(m)
 
+	m.Use(render.Renderer())
+
 	sites := make(SiteMap)
 
-	m.Get("/", func(p martini.Params) string {
-		return "HELLO WORLD!\n"
+	m.Get("/", func(r render.Render) {
+		r.HTML(200, "index", config.Url())
 	})
 
 	m.Get("/add/:ip", func(p martini.Params) string {
@@ -102,6 +105,14 @@ func main() {
 	m.Get("/query/:ip", func(p martini.Params) string {
 		ip := p["ip"]
 		return fmt.Sprintf("%s\n", sites.QuerySite(ip))
+	})
+
+	m.Get("/dump", func(p martini.Params) string {
+		result := ""
+		for _, site := range sites {
+			result += fmt.Sprintf("%s\n", site.Stats())
+		}
+		return result
 	})
 
 	sites.AddSite(config.Url())
