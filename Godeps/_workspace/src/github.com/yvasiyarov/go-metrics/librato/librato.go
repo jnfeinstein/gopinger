@@ -7,6 +7,8 @@ import (
 	"math"
 	"regexp"
 	"time"
+
+	//"github.com/rcrowley/go-metrics"
 )
 
 // a regexp for extracting the unit from time.Duration.String
@@ -103,14 +105,16 @@ func (self *Reporter) BuildRequest(now time.Time, r metrics.Registry) (snapshot 
 
 		switch m := metric.(type) {
 		case metrics.Counter:
-			measurement[Name] = fmt.Sprintf("%s.%s", name, "count")
-			measurement[Value] = float64(m.Count())
-			measurement[Attributes] = map[string]interface{}{
-				DisplayUnitsLong:  Operations,
-				DisplayUnitsShort: OperationsShort,
-				DisplayMin:        "0",
+			if m.Count() > 0 {
+				measurement[Name] = fmt.Sprintf("%s.%s", name, "count")
+				measurement[Value] = float64(m.Count())
+				measurement[Attributes] = map[string]interface{}{
+					DisplayUnitsLong:  Operations,
+					DisplayUnitsShort: OperationsShort,
+					DisplayMin:        "0",
+				}
+				snapshot.Counters = append(snapshot.Counters, measurement)
 			}
-			snapshot.Counters = append(snapshot.Counters, measurement)
 		case metrics.Gauge:
 			measurement[Name] = name
 			measurement[Value] = float64(m.Value())
