@@ -18,7 +18,11 @@ type Database struct {
 }
 
 func makeDb() (*Database, error) {
-	db, err := sql.Open("postgres", config.PostgresArgs())
+	postgres_args := config.PostgresArgs()
+	if len(postgres_args) <= 0 {
+		return nil, nil // Disables persisting
+	}
+	db, err := sql.Open("postgres", postgres_args)
 	if err != nil {
 		return nil, err
 	}
