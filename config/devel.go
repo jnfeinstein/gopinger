@@ -12,6 +12,10 @@ func IsHeroku() bool {
 	return false
 }
 
+func PostgresArgs() string {
+	return "dbname=postgres sslmode=disable"
+}
+
 func Url() string {
 	host, port := os.Getenv("HOST"), os.Getenv("PORT")
 	if len(host) <= 0 {

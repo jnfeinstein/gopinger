@@ -15,6 +15,10 @@ func IsHeroku() bool {
 	return true
 }
 
+func PostgresArgs() string {
+	return "$DATABASE_URL"
+}
+
 func Url() string {
 	return os.Getenv("URL")
 }
