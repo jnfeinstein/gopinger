@@ -158,9 +158,7 @@ func main() {
 	}
 
 	for _, s := range persistedSites {
-		s.Exit = make(chan bool)
-		sites[s.Ip] = &s
-		go s.Ping()
+		sites.AddSite(nil, s.Ip)
 	}
 
 	m.Get("/", func(r render.Render, req *http.Request) {
